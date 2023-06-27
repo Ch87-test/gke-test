@@ -1,0 +1,132 @@
+module: terraform-google-kubernetes-engine
+version: "23.3.0"
+submodule: modules/private-cluster
+
+
+project: "project"
+vpc: "network/vpc-lan"
+kms: "kms/gke/gke-01-v2"
+iam_kms: "iam/kms/gke-01-v2"
+subnets: "network/subnets"
+
+name : gke-01-us-east1
+master_ipv4_cidr_block: 10.0.0.0/28
+
+cluster_resource_labels: 
+  environment: dev
+  resource: gke-cluster
+  iac : true 
+  cmdb-infradev : infradev
+# cmdb-product: product
+initial_node_count: 1
+
+node_pools:
+  -
+    name: p1-gke-01-us-east1
+    spot : true
+    machine_type: e2-medium
+    max_count: 2
+    min_count: 0
+    strategy : BLUE_GREEN
+node_pools_labels:
+  p1-gke01-us-east1:
+     environment: dev
+     resource: gke-cluster-node-pool
+  default_values:
+     cluster_name: false
+     node_pool: false
+node_pools_metadata:
+  default_values:
+     cluster_name: false
+     node_pool: false
+node_pools_oauth_scopes:
+  p1-gke-01-us-east1:
+    - https://www.googleapis.com/auth/cloud-platform
+    - https://www.googleapis.com/auth/compute
+    - https://www.googleapis.com/auth/devstorage.read_only
+    - https://www.googleapis.com/auth/logging.write
+    - https://www.googleapis.com/auth/monitoring
+    - https://www.googleapis.com/auth/service.management
+    - https://www.googleapis.com/auth/servicecontrol
+    - https://www.googleapis.com/auth/trace.append
+node_pools_tags:
+  default_values:
+    - false
+    - false
+
+master_authorized_networks:
+  -
+    cidr_block: "35.237.20.156/32"
+    display_name: "Cloudbees"
+  -
+    cidr_block: "173.192.83.131/32"
+    display_name: "ciagent3dal"
+  -
+    cidr_block: "35.190.129.85/32"
+    display_name: "ciagent4dal"
+  -
+    display_name: "LATAM Chile"
+    cidr_block: "200.14.107.0/24"
+  -
+    display_name: "cloudbees-2"
+    cidr_block: "35.231.4.143/32"
+  -
+    display_name: "cloudbees-3"
+    cidr_block: "104.196.174.232/32"
+  -
+    display_name: "cloudbees-4"
+    cidr_block: "35.184.74.102/32"
+  -
+    display_name: "cloudbees-5"
+    cidr_block: "104.198.249.152/32"
+  -
+    display_name: "cloudbees-6"
+    cidr_block: "34.73.114.22/32"
+  -
+    display_name: "cloudbees-7"
+    cidr_block: "34.74.115.227/32"
+  -
+    display_name: "cloudbees-8"
+    cidr_block: "35.237.221.11/32"
+  -
+    display_name: "cloudbees-9"
+    cidr_block: "104.196.68.47/32"
+  -
+    display_name: "cloudbees-10"
+    cidr_block: "34.69.107.90/32"
+  -
+    display_name: "cloudbees-11"
+    cidr_block: "107.178.217.139/32"
+  -
+    display_name: "cloudbees-12"
+    cidr_block: "35.223.24.192/32"
+  -
+    display_name: "cloudbees-13"
+    cidr_block: "35.232.47.66/32"
+  -
+    display_name: "cloudbees-14"
+    cidr_block: "35.231.66.52/32"
+  -
+    display_name: "cloudbees-15"
+    cidr_block: "34.75.116.192/32"
+  -
+    display_name: "cloudbees-16"
+    cidr_block: "34.73.1.174/32"
+  -
+    display_name: "cloudbees-17"
+    cidr_block: "34.74.36.39/32"
+  -
+    display_name: "cloudbees-18"
+    cidr_block: "35.229.43.205/32"
+  -
+    display_name: "cloudbees-19"
+    cidr_block: "34.73.28.117/32"
+  -
+    display_name: "cloudbees-20"
+    cidr_block: "104.196.98.133/32"
+  -
+    display_name: "cloudbees-21"
+    cidr_block: "35.227.28.206/32"
+  -
+    display_name: "cloudbees-22"
+    cidr_block: "35.231.136.83/32"
